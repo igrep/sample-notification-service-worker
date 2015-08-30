@@ -3,7 +3,10 @@
 function notify(){
   if (Notification.permission === 'granted'){
     console.log('Calling new Notification() from ServiceWorker... Doki doki!');
-    self.registration.showNotification('Yay! Successfully notified from a ServiceWorker!');
+    self.registration.showNotification(
+      'Yay! Successfully notified from a ServiceWorker!',
+      { tag: 'sample' }
+    );
   } else if (Notification.permission === 'default'){
     console.warn('Hay! The user has not granted nor denied yet! Reload the page!');
   } else {
