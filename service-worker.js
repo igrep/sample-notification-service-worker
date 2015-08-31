@@ -1,10 +1,32 @@
 'use strict';
 
+var intervalSec = 0;
+var started = false;
+
+self.addEventListener('message', function(event){
+  intervalSec = event.data.newIntervalSec;
+  console.log('Received new interval in second: ', intervalSec);
+  if (!started){
+    console.log('Starting notification');
+    keepNotifying();
+    started = true;
+  }
+});
+
+function keepNotifying(){
+  setTimeout(
+    function(){
+      notify();
+      keepNotifying();
+    },
+    intervalSec
+  );
+}
+
 function notify(){
   if (Notification.permission === 'granted'){
-    console.log('Calling new Notification() from ServiceWorker... Doki doki!');
     self.registration.showNotification(
-      'Yay! Successfully notified from a ServiceWorker!',
+      new Date().toString() + 'Yay! Successfully notified from a ServiceWorker!',
       { tag: 'sample' }
     );
   } else if (Notification.permission === 'default'){
@@ -13,4 +35,3 @@ function notify(){
     console.warn('OMG! The user has denied notification! Give up!');
   }
 }
-setInterval(notify, 3000);
