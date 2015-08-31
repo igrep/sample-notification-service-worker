@@ -23,9 +23,9 @@ navigator.serviceWorker.register('/service-worker.js').then(function(registratio
   console.log('ServiceWorker registration successful with scope: ', registration.scope);
 
   var worker = workerOfRegistration(registration);
-  var startButton = document.getElementsByClassName('startButton')[0];
+
   var everyNsecondsField = document.getElementsByClassName('everyNseconds')[0];
-  startButton.addEventListener('click', function(){
+  document.getElementsByClassName('startButton')[0].addEventListener('click', function(){
     var input = everyNsecondsField.value
     var everyNseconds = parseInt(input, 10) * 1000;
     if (everyNseconds <= 0){
@@ -35,6 +35,10 @@ navigator.serviceWorker.register('/service-worker.js').then(function(registratio
 
     console.log('Parsed interval: ', everyNseconds);
     worker.postMessage({ newIntervalSec: everyNseconds });
+  });
+
+  document.getElementsByClassName('stopButton')[0].addEventListener('click', function(){
+    worker.postMessage({ stop: true });
   });
 }).catch(function(err) {
   console.log('ServiceWorker registration failed: ', err);

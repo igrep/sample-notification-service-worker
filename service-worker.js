@@ -1,26 +1,25 @@
 'use strict';
 
 var intervalSec = 0;
-var started = false;
+var timeoutId = null;
 
 self.addEventListener('message', function(event){
+  if (event.data.stop){
+    clearTimeout(timeoutId);
+    timeoutId = null;
+    return;
+  }
+
   intervalSec = event.data.newIntervalSec;
   console.log('Received new interval in second: ', intervalSec);
-  if (!started){
-    console.log('Starting notification');
-    keepNotifying();
-    started = true;
+  if (timeoutId){
+    clearTimeout(timeoutId);
   }
+  timeoutId = keepNotifying(intervalSec);
 });
 
-function keepNotifying(){
-  setTimeout(
-    function(){
-      notify();
-      keepNotifying();
-    },
-    intervalSec
-  );
+function keepNotifying(intervalSec){
+  return setInterval(notify, intervalSec);
 }
 
 function notify(){
