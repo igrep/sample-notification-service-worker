@@ -18,7 +18,6 @@ Notification.requestPermission(function(status){
   console.log('Permission: ', status);
 });
 
-// from http://www.html5rocks.com/ja/tutorials/service-worker/introduction/
 navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
   console.log('ServiceWorker registration successful with scope: ', registration.scope);
 

@@ -1,6 +1,5 @@
 'use strict';
 
-var intervalSec = 0;
 var timeoutId = null;
 
 self.addEventListener('message', function(event){
@@ -10,7 +9,7 @@ self.addEventListener('message', function(event){
     return;
   }
 
-  intervalSec = event.data.newIntervalSec;
+  var intervalSec = event.data.newIntervalSec;
   console.log('Received new interval in second: ', intervalSec);
   if (timeoutId){
     clearTimeout(timeoutId);
