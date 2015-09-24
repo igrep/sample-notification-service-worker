@@ -4,9 +4,9 @@ Sample of Web Notification from a Service Worker.
 
 # Important Notice
 
-**Assumes** any features required to run this page are supported by the browser.
-
-I tested on Google Chrome 44 64bit on Linux.
+Currently, this app does **NOT** use Service Worker properly.  
+The spawned service worker gets eventually **killed** by the browser
+because the worker runs in an infinite loop.
 
 # (Perhaps) easiest way to run this sample
 
